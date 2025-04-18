@@ -1,0 +1,25 @@
+/notification-service/target/
+/order-service/target/
+
+/notification-service/!.mvn/wrapper/maven-wrapper.jar
+/notification-service/!**/src/main/**/target/
+/notification-service/!**/src/test/**/target/
+
+/order-service/!.mvn/wrapper/maven-wrapper.jar
+/order-service/!**/src/main/**/target/
+/order-service/!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/notification-service/.idea
+/notification-service/*.iws
+/notification-service/*.iml
+/notification-service/*.ipr
+
+/order-service/.idea
+/order-service/*.iws
+/order-service/*.iml
+/order-service/*.ipr
