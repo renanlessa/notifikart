@@ -1,20 +1,25 @@
 # 🛒 Notifikart - E-commerce Simplificado com Spring Boot e Kafka
 
-Este projeto demonstra a comunicação entre microsserviços usando Apache Kafka, simulando um cenário de e-commerce onde eventos de pedidos disparam notificações automáticas.
+Este projeto é composto por dois microsserviços principais: `order-service` e `notification-service`. Ele utiliza **Spring Boot**, **Kafka** para mensageria e **MongoDB** como banco de dados. O **Keycloak** é usado como servidor de autorização para autenticação baseada em JWT.
 
 ## 🧱 Arquitetura
 
-- **Order Service**: expõe endpoints REST para criação e atualização de pedidos, publicando eventos no Kafka.
-- **Notification Service**: consome eventos do Kafka e envia notificações baseadas no status do pedido.
+- **order-service**: Responsável por gerenciar pedidos e produzir mensagens no Kafka.
+- **notification-service**: Consome mensagens do Kafka e processa notificações.
 
 ![Diagrama da arquitetura](./docs/arquitetura.png)
 
 ## 📦 Tecnologias
 
-- Java 17
-- Spring Boot 3.x
-- Apache Kafka
-- Docker / Docker Compose
+- **Java 17**
+- **Spring Boot 3.3.4**
+   - Spring Web
+   - Spring Security (OAuth2 Resource Server)
+   - Spring Kafka
+   - Spring Data MongoDB
+- **Apache Kafka**
+- **MongoDB**
+- **Keycloak** (para autenticação e autorização)
 
 ## 🚀 Como subir o ambiente (Keycloak + Kafka)
 
@@ -93,11 +98,13 @@ docker-compose up -d
 Com isso, o token JWT do Keycloak já conterá:
 
 ```json
-"realm_access": {  
+{
+  "realm_access": {
     "roles": [
       "USER",
       "ADMIN"
     ]
+  }
 }
 ```
 
