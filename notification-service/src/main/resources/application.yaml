@@ -2,6 +2,21 @@ server:
   port: 8082
 
 spring:
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: notificart
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      group-id: notification-group
+
   security:
     oauth2:
       resourceserver:
