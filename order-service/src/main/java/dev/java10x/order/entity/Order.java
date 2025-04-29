@@ -1,16 +1,18 @@
 package dev.java10x.order.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Data
-@Document(collation = "orders")
+@Document(collection = "order")
 public class Order {
 
     @Id
