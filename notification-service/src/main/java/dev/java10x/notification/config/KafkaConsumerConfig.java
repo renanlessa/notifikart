@@ -21,15 +21,16 @@ public class KafkaConsumerConfig {
 
     @Value("${kafka.url}")
     private String kafkaServer;
+    @Value("${kafka.group}")
+    private String notificationGroup;
 
     @Bean
     public ConsumerFactory<String, NotificationMessage> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "notification-group");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, notificationGroup);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(NotificationMessage.class));
     }
 

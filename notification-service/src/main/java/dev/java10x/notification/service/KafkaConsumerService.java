@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class KafkaConsumerService {
 
     @KafkaListener(topics = "${kafka.topic}")
-    public void consumeMessage(NotificationMessage message) {
-        log.info("Mensagem recebida: {}", message);
+    public void consumeMessage(NotificationMessage notificationMesssage) {
+        log.info("Mensagem recebida: {}", notificationMesssage);
     }
 }

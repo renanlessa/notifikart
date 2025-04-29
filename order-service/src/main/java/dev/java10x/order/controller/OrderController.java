@@ -32,32 +32,11 @@ public class OrderController {
         return OrderMapper.toOrderResponse(savedOrder);
     }
 
-    @PutMapping("/pay")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public OrderResponse payOrder(@RequestBody UpdateOrderRequest request) {
+    public OrderResponse updateOrder(@RequestBody UpdateOrderRequest request) {
         log.info("Updating order with request: {}", request);
         Order savedOrder = updateOrderService.execute(request.getOrderId(), request.getOrderEvent());
         return OrderMapper.toOrderResponse(savedOrder);
     }
-
-    @PutMapping("/ship")
-    @ResponseStatus(HttpStatus.OK)
-    public OrderResponse shipOrder(@RequestBody UpdateOrderRequest request) {
-        log.info("Updating order with request: {}", request);
-        Order savedOrder = updateOrderService.execute(request.getOrderId(), request.getOrderEvent());
-        return OrderMapper.toOrderResponse(savedOrder);
-    }
-
-    @PutMapping("/deliver")
-    public void deliverOrder(@RequestBody UpdateOrderRequest request) {
-        log.info("Updating order with request: {}", request);
-        // implementar
-    }
-
-    @PutMapping("/cancel")
-    public void cancelOrder(@RequestBody UpdateOrderRequest request) {
-        log.info("Updating order with request: {}", request);
-        // implementar
-    }
-
 }

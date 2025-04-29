@@ -18,3 +18,4 @@ spring:
 kafka:
   url: localhost:9092
   topic: notification-topic
+  group: notification-group
