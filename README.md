@@ -1,13 +1,17 @@
+![java10x Logo](https://java10x.dev/wp-content/uploads/2024/12/logo-java.png)
+
 # 🛒 Notifikart - E-commerce Simplificado com Spring Boot e Kafka
 
-Este projeto é composto por dois microsserviços principais: `order-service` e `notification-service`. Ele utiliza **Spring Boot**, **Kafka** para mensageria e **MongoDB** como banco de dados. O **Keycloak** é usado como servidor de autorização para autenticação baseada em JWT.
+Este projeto é composto por dois microsserviços principais: `order-service` e `notification-service`. 
+Ele utiliza **Spring Boot**, **Kafka** para mensageria e **MongoDB** como banco de dados. 
+O **Keycloak** é usado como servidor de autorização para autenticação baseada em JWT.
 
 ## 🧱 Arquitetura
 
 - **order-service**: Responsável por gerenciar pedidos e produzir mensagens no Kafka.
 - **notification-service**: Consome mensagens do Kafka e processa notificações.
-
-![Diagrama da arquitetura](./docs/arquitetura.png)
+- **keycloak**: Authorization Server (Keycloak) para autenticação e autorização.
+- **kafka**: Mensageria entre os microsserviços.
 
 ## 📦 Tecnologias
 
@@ -17,11 +21,13 @@ Este projeto é composto por dois microsserviços principais: `order-service` e 
    - Spring Security (OAuth2 Resource Server)
    - Spring Kafka
    - Spring Data MongoDB
+   - Spring State Machine
+   - Lombok
 - **Apache Kafka**
 - **MongoDB**
-- **Keycloak** (para autenticação e autorização)
+- **Keycloak** (Authorization Server)
 
-## 🚀 Como subir o ambiente (Keycloak + Kafka)
+## 🚀 Como subir o ambiente (Keycloak + Kafka + MongoDB)
 
 Execute o comando abaixo na pasta docker contida na raiz do projeto para subir os containers:
 
@@ -108,4 +114,74 @@ Com isso, o token JWT do Keycloak já conterá:
 }
 ```
 
-### 1. Subir o ambiente Kafka
+## 🚀 Como rodar o projeto
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/renanlessa/notifikart.git
+```
+
+2. Garanta que MongoDB, Kafka e Keycloak estejam rodando.
+
+3. Execute o order-service (configurado para rodar na porta 8081):
+
+```bash
+./mvnw spring-boot:run
+```
+
+4. Execute o notification-service (configurado para rodar na porta 8082):
+
+```bash
+./mvnw spring-boot:run
+```
+
+5. Acesse: `http://localhost:8081` para o order-service e `http://localhost:8082` para o notification-service.
+
+6. Acesse o Keycloak em `http://localhost:8080` para gerenciar usuários e roles, user: admin, password: admin.
+
+7. Realizar autenticação no keycloak e obter o token JWT:
+
+```
+   curl --location 'http://localhost:8080/realms/notificart/protocol/openid-connect/token' \
+   --header 'Content-Type: application/x-www-form-urlencoded' \
+   --data-urlencode 'grant_type=password' \
+   --data-urlencode 'client_id=notificart-client' \
+   --data-urlencode 'username=renanlessa' \
+   --data-urlencode 'password=12345'
+```
+8. Realizar as demais chamadas para o order-service, utilizando o token JWT obtido no passo anterior.
+9. Endpoints do order-service:
+
+| Método | Caminho     | Descrição            |
+|--------|-------------|----------------------|
+| POST   | `/order`    | Criar pedido         |
+| PUT    | `/stadiums` | Editar status pedido |
+
+10. notification-service não tem nenhum endpoint, apenas consome mensagens do Kafka.
+
+---
+
+### License
+
+MIT License
+
+Copyright (c) 2025 Renan Lessa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
