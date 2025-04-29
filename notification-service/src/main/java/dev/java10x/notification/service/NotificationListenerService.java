@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class KafkaConsumerService {
+public class NotificationListenerService {
 
     @KafkaListener(topics = "${kafka.topic}")
     public void consumeMessage(NotificationMessage notificationMesssage) {
