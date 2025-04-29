@@ -9,16 +9,12 @@ spring:
       port: 27017
       database: notificart
 
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      auto-offset-reset: earliest
-      group-id: notification-group
-
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/notificart
+
+kafka:
+  url: localhost:9092
+  topic: notification-topic
